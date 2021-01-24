@@ -6,7 +6,7 @@
   <button (click)="getVersion()">Obtener versión</button>
 
   <div id="notification" *ngIf="showNotification">
-    <p id="message"></p>
+    <p id="message">{{mensaje}}</p>
     <button id="close-button" (click)="closeNotification()">
       Cerrar
     </button>

@@ -1,0 +1,17 @@
+<div style="text-align:center">
+  <h1>Welcome to {{ title }}!</h1>
+</div>
+
+<div style="padding: 16px;">
+  <button (click)="getVersion()">Obtener versión</button>
+
+  <div id="notification" *ngIf="showNotification">
+    <p id="message"></p>
+    <button id="close-button" (click)="closeNotification()">
+      Cerrar
+    </button>
+    <button id="restart-button" (click)="restartApp()" *ngIf="showRestartBtn">
+      Reiniciar
+    </button>
+  </div>
+</div>

@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const menu = require('./menu');
+const fs = require('fs');
+const { lsDevices } = require('fs-hard-drive');
 
 let win;
 
@@ -62,4 +64,35 @@ ipcMain.on('restart_app', () => {
   autoUpdater.quitAndInstall();
 });
 
+ipcMain.on('list_drives', async () => {
+  const drives = await lsDevices().then(ok => ok, err => err);
+  console.log(drives)
+  win.webContents.send('list_drives', {drives});
+});
+
+
+ipcMain.on('explorer_list_files', (event, args) => {
+
+  const testFolder = args.driveSelected;
+  let arrFiles = [];
+  fs.readdir(testFolder, (err, files) => {
+    files.forEach(file => {
+      // console.log(testFolder+file+' :', fs.existsSync(testFolder+file))
+      if (fs.existsSync(testFolder+file)) {
+        let objectFile = {
+          name: file,
+          type: fs.statSync(testFolder+file).isDirectory() ? 'directory' : (fs.statSync(testFolder+file).isFile() ? 'file' : 'unknown')
+        };
+        arrFiles.push(objectFile);
+      }
+    });
+    win.webContents.send('explorer_list_files', {arrFiles});
+  });
+});
+
 Menu.setApplicationMenu(menu);
+
+
+
+
+

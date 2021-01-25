@@ -17,3 +17,12 @@ body {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   z-index: 9999999;
 }
+
+table {
+  width:100%;
+  margin-top: 16px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}

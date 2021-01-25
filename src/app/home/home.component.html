@@ -4,6 +4,27 @@
 
 <div style="padding: 16px;">
   <button (click)="getVersion()">Obtener versión</button>
+  <br>
+  <br>
+
+  <label for="drives">Unidad de disco: </label>
+  <select id="drives" (change)="listFiles($event)">
+    <option value="">[Seleccione unidad]</option>
+    <option *ngFor="let d of drives" [value]="d.value">{{d.name}}</option>
+  </select>
+
+
+  <table *ngIf="files.length > 0">
+    <tr>
+      <th>Nombre</th>
+      <th>Tipo</th>
+    </tr>
+    <tr *ngFor="let f of files">
+      <td>{{f.name}}</td>
+      <td>{{f.type}}</td>
+    </tr>
+  </table>
+
 
   <div id="notification" *ngIf="showNotification">
     <p id="message">{{mensaje}}</p>
